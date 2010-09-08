@@ -1,0 +1,6 @@
+require "rubygems"
+require "test/unit"
+require "rack"
+require "rack/mock"
+require "mocha"
+require "rack/mogilefs"
