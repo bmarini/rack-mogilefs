@@ -1,6 +1,12 @@
 # Rack middleware/endpoint for serving MogileFS files
 
-## Examples:
+## Getting Started:
+
+First install the gem:
+
+    gem install rack-mogilefs
+
+There are a variety of ways to use it:
 
 ### Rack middleware
     # (config.ru)
@@ -23,6 +29,12 @@
         end
       end
     end
+
+## File Lookup
+
+`Rack::MogileFS` uses the request path (`PATH_INFO`) for the MogileFS key. The
+content type of the file is detected by the extension, using the `mime-types`
+gem.
 
 ## Configuration
 
