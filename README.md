@@ -40,10 +40,19 @@ There are a variety of ways to use it:
 content type of the file is detected by the extension, using the `mime-types`
 gem.
 
+If you want to customize the mapping of the PATH_INFO string to a MogileFS key
+you can provide a mapper proc (or anything that responds to call) like this:
+
+    # map '/assets/filename.gif' to the mogilefs key 'filename.gif'
+    # Rack::MogileFS and Rack::MogileFS::Endpoint take the same options
+    use Rack::MogileFS,
+      :path   => %r{^/assets/*},
+      :mapper => lambda { |path| path.sub('/assets/', '') }
+
 ## Configuration
 
-By default will look for a yaml config in `config/mogilefs.yml` that looks
-like this:
+If `Rack::MogileFS` detects it is inside a Rails app, it will look for a yaml
+config in `config/mogilefs.yml` that looks like this:
 
     development:
       connection:
@@ -56,7 +65,7 @@ like this:
       ...
 
 
-and initialize a mogilefs client like this:
+and initialize a MogileFS client like this:
 
     config = YAML.load_file( Rails.root.join("config/mogilefs.yml") )[Rails.env]
     MogileFS::MogileFS.new( config["connection"].symbolize_keys )
