@@ -39,10 +39,6 @@ module Rack
         Mime.mime_type(::File.extname(path), @options[:default_content_type])
       end
 
-      def content_length(data)
-        Utils.bytesize(data)
-      end
-
       def client
         @options[:client]
       end
