@@ -1,13 +1,13 @@
 Gem::Specification.new do |s|
   s.name        = "rack-mogilefs"
-  s.version     = "0.1.1"
-  s.date        = "2010-09-08"
+  s.version     = "0.1.2"
+  s.date        = "2010-09-09"
   s.summary     = "A rack middleware and/or endpoint to serve up files from MogileFS"
   s.email       = "bmarini@gmail.com"
   s.homepage    = "http://github.com/bmarini/rack-mogilefs"
   s.description = "A rack middleware and/or endpoint to serve up files from MogileFS"
   s.authors     = ["Ben Marini"]
-  s.files       = Dir.glob("lib/**/*") + %w(README.md Rakefile)
+  s.files       = Dir.glob("lib/**/*") + %w(README.md Rakefile HISTORY.md)
   s.test_files  = Dir.glob("test/**/*")
 
   s.add_dependency "mogilefs-client", "~> 2.1.0"
