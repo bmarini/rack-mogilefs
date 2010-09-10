@@ -73,4 +73,3 @@ and initialize a MogileFS client like this:
 You can override this by passing in a MogileFS client of your own:
 
     Rack::MogileFS::Endpoint.new :client => MyMogileFSClient.new
-    

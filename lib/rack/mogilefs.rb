@@ -1,5 +1,6 @@
 require 'mogilefs'
-require 'mime/types'
+require 'rack/mime'
+require 'rack/utils'
 
 module Rack
   class MogileFS

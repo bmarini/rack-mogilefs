@@ -15,7 +15,12 @@ module Rack
       def call(env)
         path = key_for_path(env['PATH_INFO'].dup)
         data = client.get_file_data(path)
-        [ 200, { "Content-Type" => content_type(path) }, [ data ] ]
+        size = Utils.bytesize(data).to_s
+
+        [ 200, {
+          "Content-Type"   => content_type(path),
+          "Content-Length" => size
+        }, [data] ]
       rescue ::MogileFS::Backend::UnknownKeyError => e
         [ 404, { "Content-Type" => "text/html" }, [e.message] ]
       rescue ::MogileFS::UnreachableBackendError => e
@@ -30,11 +35,12 @@ module Rack
         @options[:mapper].respond_to?(:call) ? @options[:mapper].call(path) : path
       end
 
-      def content_type(path_info)
-        ext = path_info.split(".").last
-        MIME::Types.type_for(ext).first.content_type
-      rescue
-        @options[:default_content_type]
+      def content_type(path)
+        Mime.mime_type(::File.extname(path), @options[:default_content_type])
+      end
+
+      def content_length(data)
+        Utils.bytesize(data)
       end
 
       def client
