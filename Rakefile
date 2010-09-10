@@ -10,3 +10,11 @@ task :test do
     t.verbose = true
   end
 end
+
+desc 'Measures test coverage'
+task :coverage do
+  rm_f "coverage"
+  rm_f "coverage.data"
+  system "rcov -x /Users -Ilib:test test/*_test.rb"
+  system "open coverage/index.html" if PLATFORM['darwin']
+end

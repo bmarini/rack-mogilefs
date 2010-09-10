@@ -5,6 +5,7 @@ module Rack
       def initialize(options={})
         @options = {
           :client => nil,
+          :mapper => nil,
           :default_content_type => "image/png"
         }.merge(options)
 
@@ -12,10 +13,11 @@ module Rack
       end
 
       def call(env)
-        data = client.get_file_data(env['PATH_INFO'])
-        [ 200, { "Content-Type" => content_type(env['PATH_INFO']) }, [ data ] ]
-      rescue ::MogileFS::Backend::UnknownKeyError
-        [ 404, { "Content-Type" => "text/html" }, ["Not Found"] ]
+        path = key_for_path(env['PATH_INFO'].dup)
+        data = client.get_file_data(path)
+        [ 200, { "Content-Type" => content_type(path) }, [ data ] ]
+      rescue ::MogileFS::Backend::UnknownKeyError => e
+        [ 404, { "Content-Type" => "text/html" }, [e.message] ]
       rescue ::MogileFS::UnreachableBackendError => e
         [ 503, { "Content-Type" => "text/html" }, [e.message] ]
       rescue ::MogileFS::Error => e
@@ -23,6 +25,10 @@ module Rack
       end
 
       protected
+
+      def key_for_path(path)
+        @options[:mapper].respond_to?(:call) ? @options[:mapper].call(path) : path
+      end
 
       def content_type(path_info)
         ext = path_info.split(".").last
