@@ -1,4 +1,8 @@
-# Rack middleware/endpoint for serving MogileFS files
+# rack-mogilefs
+
+If you are using Nginx you'll probably want to serve MogileFS files with
+the [MogileFS Module](http://www.grid.net.ru/nginx/mogilefs.en.html), but if
+you need to serve them out of a Rack app, this should help.
 
 ## Getting Started:
 
@@ -10,19 +14,19 @@ There are a variety of ways to use it:
 
 ### Rack middleware
     # (config.ru)
-    use Rack::MogileFS, :path => %r{^/system/*}
+    use Rack::MogileFS, :path => %r{^/assets/*}
 
 ### Rails 3:
 
     # (config/routes.rb)
-    match "/system/*" => Rack::MogileFS::Endpoint.new
+    match "/assets/*" => Rack::MogileFS::Endpoint.new
 
 ### Rails 2:
 
-    # (app/metal/mogilefs.rb)
-    class MogileFSMetal
+    # (app/metal/mogilefs_metal.rb)
+    class MogilefsMetal
       def self.call(env)
-        if env["PATH_INFO"] =~ %r{^/system/*}
+        if env["PATH_INFO"] =~ %r{^/assets/*}
           Rack::MogileFS::Endpoint.new.call(env)
         else
           [ 404, { "Content-Type" => "text/html" }, ["Not Found"] ]
