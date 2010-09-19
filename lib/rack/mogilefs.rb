@@ -12,10 +12,14 @@ module Rack
 
     def call(env)
       if env['PATH_INFO'] =~ @options[:path]
-        Endpoint.new(@options).call(env)
+        endpoint.call(env)
       else
         @app.call(env)
       end
+    end
+
+    def endpoint
+      @endpoint ||= Endpoint.new(@options)
     end
   end
 end
