@@ -4,8 +4,9 @@ module Rack
 
       def initialize(options={})
         @options = {
-          :client => nil,
-          :mapper => nil,
+          :client   => nil,
+          :mapper   => nil,
+          :strategy => :serve,
           :default_content_type => "image/png"
         }.merge(options)
 
@@ -14,13 +15,13 @@ module Rack
 
       def call(env)
         path = key_for_path(env['PATH_INFO'].dup)
-        data = client.get_file_data(path)
-        size = Utils.bytesize(data).to_s
 
-        [ 200, {
-          "Content-Type"   => content_type(path),
-          "Content-Length" => size
-        }, [data] ]
+        if @options[:strategy] == :reproxy
+          reproxy(path)
+        else
+          serve_file(path)
+        end
+
       rescue ::MogileFS::Backend::UnknownKeyError => e
         [ 404, { "Content-Type" => "text/html" }, [e.message] ]
       rescue ::MogileFS::UnreachableBackendError => e
@@ -30,6 +31,26 @@ module Rack
       end
 
       protected
+
+      def reproxy(path)
+        paths = client.get_paths(path)
+
+        [ 200, {
+          "Content-Type"     => content_type(path),
+          "X-Accel-Redirect" => "/reproxy",
+          "X-Reproxy-Url"    => paths.first # This would be better if supported: paths.join(",")
+        }, [] ]
+      end
+
+      def serve_file(path)
+        data = client.get_file_data(path)
+        size = Utils.bytesize(data).to_s
+
+        [ 200, {
+          "Content-Type"   => content_type(path),
+          "Content-Length" => size
+        }, [data] ]
+      end
 
       def key_for_path(path)
         @options[:mapper].respond_to?(:call) ? @options[:mapper].call(path) : path

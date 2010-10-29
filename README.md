@@ -2,7 +2,24 @@
 
 If you are using Nginx you'll probably want to serve MogileFS files with
 the [MogileFS Module](http://www.grid.net.ru/nginx/mogilefs.en.html), but if
-you need to serve them out of a Rack app, this should help.
+you need a quick way to serve them out of a Rack app, this should help.
+
+## Caveats
+
+Serving files through Ruby is slow. The preferred method is to set an
+X-Reproxy-Url header from ruby and let the web server serve the file. For
+Nginx, you could have a config like this:
+
+    location /reproxy {
+        internal;
+        set $reproxy $upstream_http_x_reproxy_url;
+        proxy_pass $reproxy;
+        proxy_hide_header Content-Type;
+    }
+
+`Rack::MogileFS` will use this method if you pass a strategy option of `:reproxy`
+
+    use Rack::MogileFS, :strategy => :reproxy
 
 ## Getting Started:
 
