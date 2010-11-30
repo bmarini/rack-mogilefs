@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "rack-mogilefs"
-  s.version     = "0.1.3"
+  s.version     = "0.2.0"
   s.date        = "2010-09-10"
   s.summary     = "A rack middleware and/or endpoint to serve up files from MogileFS"
   s.email       = "bmarini@gmail.com"

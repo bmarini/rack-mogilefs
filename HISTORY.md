@@ -1,3 +1,7 @@
+## 0.2.0 (2010-11-29)
+
+* Add X-Reproxy-Url support
+
 ## 0.1.3 (2010-09-10)
 
 * Depend on rack/mime instead of mime-types
