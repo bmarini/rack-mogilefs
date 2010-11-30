@@ -38,7 +38,7 @@ module Rack
         [ 200, {
           "Content-Type"     => content_type(path),
           "X-Accel-Redirect" => "/reproxy",
-          "X-Reproxy-Url"    => paths.first # This would be better if supported: paths.join(",")
+          "X-Reproxy-Url"    => paths.join(" ")
         }, [] ]
       end
 
