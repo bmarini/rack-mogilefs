@@ -34,6 +34,14 @@ class Test::Unit::TestCase
   end
 
   def assert_content_type(content_type)
-    assert_equal content_type, @response.headers["Content-Type"]
+    assert_equal_header content_type, "Content-Type"
+  end
+
+  def assert_cache_control(cache_control)
+    assert_equal_header cache_control, "Cache-Control"
+  end
+
+  def assert_equal_header(expected, header)
+    assert_equal expected, @response.headers[header]
   end
 end

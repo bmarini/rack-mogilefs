@@ -20,9 +20,9 @@ module Rack
 
         def serve_file(path)
           data = client.get_file_data(path)
-          size = Utils.bytesize(data).to_s
+          file = File.new(path, data)
 
-          [ 200, headers(path, data), [data] ]
+          [ 200, headers(file), [data] ]
         end
 
         def client
@@ -33,19 +33,11 @@ module Rack
           path
         end
 
-        def headers(path, data)
+        def headers(file)
           {
-            "Content-Type"   => content_type(path),
-            "Content-Length" => content_length(data)
+            "Content-Type"   => file.content_type(@options[:default_content_type]),
+            "Content-Length" => file.length
           }
-        end
-
-        def content_type(path)
-          Mime.mime_type(::File.extname(path), @options[:default_content_type])
-        end
-
-        def content_length(data)
-          Utils.bytesize(data).to_s
         end
 
       end
