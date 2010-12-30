@@ -51,6 +51,33 @@ you can provide a mapper proc (or anything that responds to call) like this:
 
 ## Configuration
 
+### Endpoint configuration
+
+Here is an example of a fully customized `Rack::MogileFS::Endpoint`. Read the
+source for more documentation.
+
+Using the expires option is recommended, other options probably aren't needed.
+
+    Rack::MogileFS::Endpoint.new(
+      :default_content_type => "image/png",
+      :expires              => 1.month, # or pass a proc...
+      :expires              => lambda { |path, ext, mime| if mime == "images/png" ? 600 : 300 },
+      :client               => MyMogileClient.new,
+      :mapper               => lambda { |path| "/namespace/" + path },
+      :strategy             => :reproxy,
+      :debug                => false
+    )
+
+Here is how I usually use it in development:
+
+    Rack::MogileFS::Endpoint.new(:expires => 1.month, :debug => true)
+
+And production:
+
+    Rack::MogileFS::Endpoint.new(:expires => 1.month)
+
+### Client Configuration
+
 If `Rack::MogileFS` detects it is inside a Rails app, it will look for a yaml
 config in `config/mogilefs.yml` that looks like this:
 
