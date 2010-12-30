@@ -1,4 +1,6 @@
 require "rubygems"
+require "bundler/setup"
+
 require "test/unit"
 require "rack"
 require "rack/mock"

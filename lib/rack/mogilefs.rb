@@ -5,6 +5,7 @@ require 'rack/utils'
 module Rack
   class MogileFS
     autoload :Endpoint, "rack/mogilefs/endpoint"
+    autoload :Version, "rack/mogilefs/version"
 
     def initialize(app, options={})
       @app, @options = app, options
