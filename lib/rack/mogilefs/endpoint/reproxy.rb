@@ -21,9 +21,10 @@ module Rack
 
         def reproxy(path)
           paths = client.get_paths(path)
+          file  = File.new(path, nil)
 
           [ 200, {
-            "Content-Type"     => content_type(path),
+            "Content-Type"     => file.content_type,
             "X-Accel-Redirect" => "/reproxy",
             "X-Reproxy-Url"    => paths.join(" ")
           }, [] ]
