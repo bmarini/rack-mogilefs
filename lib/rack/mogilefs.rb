@@ -23,3 +23,28 @@ module Rack
     end
   end
 end
+
+
+# module Rack
+#   class MyMogileFS
+#     include Rack::MogileFS::Base
+#     include Rack::MogileFS::ContentType
+#     include Rack::MogileFS::Caching
+#     include Rack::MogileFS::Reproxy
+#   end
+# end
+
+# module Rack
+#   class CachedMogileFS
+#     def self.call(env)
+#       status, headers, body = Rack::MogileFS::Endpoint.new.call(env)
+#       # status, headers, body = [ 200, {"Content-Type" => "text/html"}, ["Hello"] ]
+# 
+#       if status == 200
+#         headers.merge!("Cache-Control" => "max-age=#{1.month}, public")
+#       end
+# 
+#       [ status, headers, body ]
+#     end
+#   end
+# end
