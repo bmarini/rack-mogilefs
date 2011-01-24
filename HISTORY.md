@@ -1,4 +1,8 @@
-## 0.3.1(2011-01-24)
+## 0.3.2 (2011-01-24)
+* Lazy load default client
+* Fix an error in the README documentation
+
+## 0.3.1 (2011-01-24)
 * Loosen dependency on rack for rails 3.0.3
 
 ## 0.3.0 (2010-12-30)

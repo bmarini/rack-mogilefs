@@ -15,7 +15,7 @@ There are a variety of ways to use it:
 ### Rails 3:
 
     # (config/routes.rb)
-    match "/assets/*" => Rack::MogileFS::Endpoint.new
+    match "/assets/*path" => Rack::MogileFS::Endpoint.new
 
 ### Rails 2:
 
