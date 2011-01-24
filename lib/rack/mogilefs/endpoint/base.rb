@@ -26,7 +26,9 @@ module Rack
         end
 
         def client
-          @options[:client]
+          @client ||= begin
+            @options[:client].respond_to?(:call) ? @options[:client].call : @options[:client]
+          end
         end
 
         def key_for_path(path)

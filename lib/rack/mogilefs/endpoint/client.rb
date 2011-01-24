@@ -7,7 +7,7 @@ module Rack
       module Client
         def initialize(*)
           super
-          @options[:client] ||= default_client
+          @options[:client] ||= lambda { default_client }
         end
 
         def default_client
