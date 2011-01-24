@@ -34,6 +34,20 @@ There are a variety of ways to use it:
     # (config.ru)
     use Rack::MogileFS, :path => %r{^/assets/*}
 
+## Paperclip Integration
+
+If you are using [MogileFS as a backend for Paperclip](https://github.com/kirtfitzpatrick/paperclip_mogilefs_storage) 
+you'll want to do one of two things.
+
+a) Set your mogilefs route to `/system/*`
+
+    match "/system/*path" => Rack::MogileFS::Endpoint.new
+
+b) Change paperclip's url to match your mogilefs route, if `/assets*`, then:
+
+    // Rails.root/config/initializers/paperclip_mogile_url.rb
+    Paperclip::Attachment.default_options.merge!(:url => "/assets/:attachment/:id/:style/:filename")
+
 ## File Lookup
 
 `Rack::MogileFS` uses the request path (`PATH_INFO`) for the MogileFS key. The
