@@ -1,17 +1,17 @@
 PATH
   remote: .
   specs:
-    rack-mogilefs (0.3.0)
+    rack-mogilefs (0.3.1)
       mogilefs-client (~> 2.1.0)
-      rack (~> 1.1.0)
+      rack (>= 1.1.0)
 
 GEM
   remote: http://rubygems.org/
   specs:
-    mocha (0.9.8)
+    mocha (0.9.10)
       rake
     mogilefs-client (2.1.0)
-    rack (1.1.0)
+    rack (1.2.1)
     rake (0.8.7)
 
 PLATFORMS
@@ -19,6 +19,4 @@ PLATFORMS
 
 DEPENDENCIES
   mocha
-  mogilefs-client (~> 2.1.0)
-  rack (~> 1.1.0)
   rack-mogilefs!

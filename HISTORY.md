@@ -1,3 +1,6 @@
+## 0.3.1(2011-01-24)
+* Loosen dependency on rack for rails 3.0.3
+
 ## 0.3.0 (2010-12-30)
 
 * Major refactoring of internals
