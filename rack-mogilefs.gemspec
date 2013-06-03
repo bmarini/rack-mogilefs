@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "rack-mogilefs"
 
-  s.add_dependency "mogilefs-client", "~> 2.1.0"
+  s.add_dependency "mogilefs-client", ">= 2.1.0"
   s.add_dependency "rack", ">= 1.1.0"
   s.add_development_dependency "mocha"
 
